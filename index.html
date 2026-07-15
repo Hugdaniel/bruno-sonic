@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Configuracion base del sitio -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mision Sonic</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Pantalla de carga fullscreen -->
+  <section class="loader-screen" id="loaderScreen" aria-label="Pantalla de carga">
+    <img class="loader-logo" src="assets/logo-sonic.png" alt="Logo de Sonic">
+    <p class="loader-text">Cargando misi&oacute;n...</p>
+
+    <!-- Anillos animados secuencialmente con CSS -->
+    <div class="rings-loader" aria-hidden="true">
+      <img class="loader-ring" src="assets/anillo.png" alt="">
+      <img class="loader-ring" src="assets/anillo.png" alt="">
+      <img class="loader-ring" src="assets/anillo.png" alt="">
+      <img class="loader-ring" src="assets/anillo.png" alt="">
+      <img class="loader-ring" src="assets/anillo.png" alt="">
+    </div>
+  </section>
+
+  <!-- Pantalla de introduccion del Sprint 1 -->
+  <main class="intro-screen is-hidden" id="introScreen">
+    <img class="intro-sonic" src="assets/sonic.png" alt="Sonic listo para la mision">
+    <h1 class="intro-message">Eggman rob&oacute; todos los anillos. &iquest;Me ayud&aacute;s a recuperarlos?</h1>
+    <button class="start-button" id="startButton" type="button">&iexcl;Vamos!</button>
+  </main>
+
+  <!-- Audios de interaccion y musica de fondo -->
+  <audio id="enterSound" src="assets/enter.mp3" preload="auto"></audio>
+  <audio id="backgroundMusic" src="assets/8bits.mp3" preload="auto" loop></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

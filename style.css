@@ -1,0 +1,189 @@
+/* Reset y configuracion general */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  background: linear-gradient(160deg, #0059d6 0%, #08a8ff 48%, #004aa8 100%);
+}
+
+button,
+img {
+  display: block;
+}
+
+button {
+  font: inherit;
+}
+
+/* Pantallas principales */
+.loader-screen,
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  min-height: 100vh;
+  padding: 32px 22px;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 38%),
+    linear-gradient(160deg, #0059d6 0%, #08a8ff 48%, #004aa8 100%);
+}
+
+.loader-screen {
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  transition: opacity 700ms ease, visibility 700ms ease;
+}
+
+.intro-screen {
+  z-index: 1;
+  display: grid;
+  grid-template-rows: minmax(220px, 1fr) auto auto;
+  align-items: center;
+  justify-items: center;
+  gap: 22px;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 500ms ease;
+}
+
+.is-hidden {
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Loader con logo, texto y anillos */
+.loader-logo {
+  width: min(76vw, 310px);
+  height: auto;
+  filter: drop-shadow(0 10px 18px rgba(0, 29, 89, 0.45));
+}
+
+.loader-text {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  text-shadow: 0 3px 0 rgba(0, 43, 130, 0.5);
+}
+
+.rings-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.loader-ring {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  opacity: 0.35;
+  filter: saturate(0.7) brightness(0.75);
+  animation: ring-glow 1.8s ease-in-out infinite;
+}
+
+.loader-ring:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.loader-ring:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+.loader-ring:nth-child(4) {
+  animation-delay: 450ms;
+}
+
+.loader-ring:nth-child(5) {
+  animation-delay: 600ms;
+}
+
+.loader-screen.is-loaded {
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+@keyframes ring-glow {
+  0%,
+  100% {
+    opacity: 0.32;
+    transform: translateY(0) scale(0.9);
+    filter: saturate(0.8) brightness(0.8);
+  }
+
+  45%,
+  55% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.13);
+    filter: saturate(1.35) brightness(1.55) drop-shadow(0 0 12px rgba(255, 225, 67, 0.95));
+  }
+}
+
+/* Introduccion previa al juego */
+.intro-sonic {
+  width: min(80vw, 320px);
+  max-height: 48vh;
+  object-fit: contain;
+  align-self: end;
+  filter: drop-shadow(0 14px 20px rgba(0, 25, 80, 0.45));
+}
+
+.intro-message {
+  width: min(100%, 420px);
+  margin: 0;
+  font-size: clamp(1.55rem, 8vw, 2.25rem);
+  line-height: 1.08;
+  text-wrap: balance;
+  text-shadow: 0 4px 0 rgba(0, 43, 130, 0.58);
+}
+
+.start-button {
+  width: min(100%, 260px);
+  min-height: 58px;
+  border: 0;
+  border-radius: 999px;
+  color: #073a90;
+  background: linear-gradient(180deg, #fff176 0%, #ffc400 100%);
+  box-shadow: 0 8px 0 #d88900, 0 16px 24px rgba(0, 23, 79, 0.35);
+  font-size: 1.15rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.start-button:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 #d88900, 0 8px 16px rgba(0, 23, 79, 0.3);
+}
+
+.start-button:focus-visible {
+  outline: 4px solid #ffffff;
+  outline-offset: 4px;
+}
+
+/* Ajustes para pantallas mas grandes */
+@media (min-width: 720px) {
+  .intro-screen {
+    padding: 48px 28px;
+    grid-template-rows: minmax(300px, 1fr) auto auto;
+  }
+
+  .loader-ring {
+    width: 42px;
+    height: 42px;
+  }
+}
