@@ -9,6 +9,7 @@ html {
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
@@ -27,11 +28,17 @@ button {
 
 /* Pantallas principales */
 .loader-screen,
-.intro-screen {
+.intro-screen,
+.green-hill-screen {
   position: fixed;
   inset: 0;
   min-height: 100vh;
-  padding: 32px 22px;
+  min-height: 100dvh;
+  padding: 24px 20px;
+}
+
+.loader-screen,
+.intro-screen {
   background: radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 38%),
     linear-gradient(160deg, #0059d6 0%, #08a8ff 48%, #004aa8 100%);
 }
@@ -47,15 +54,16 @@ button {
 }
 
 .intro-screen {
-  z-index: 1;
+  z-index: 2;
   display: grid;
-  grid-template-rows: minmax(220px, 1fr) auto auto;
+  grid-template-rows: minmax(0, 1fr) auto auto;
   align-items: center;
   justify-items: center;
-  gap: 22px;
+  gap: 14px;
+  overflow: hidden;
   text-align: center;
   opacity: 1;
-  transition: opacity 500ms ease;
+  transition: opacity 1100ms ease;
 }
 
 .is-hidden {
@@ -134,39 +142,73 @@ button {
 }
 
 /* Introduccion previa al juego */
+.intro-logo {
+  width: min(70vw, 280px);
+  height: auto;
+  opacity: 0;
+  transform: translateY(-70px);
+  filter: drop-shadow(0 12px 18px rgba(0, 25, 80, 0.42));
+}
+
 .intro-sonic {
-  width: min(80vw, 320px);
-  max-height: 48vh;
+  width: min(72vw, 280px);
+  max-height: 42dvh;
   object-fit: contain;
   align-self: end;
+  opacity: 0;
+  transform: translateX(-110vw);
   filter: drop-shadow(0 14px 20px rgba(0, 25, 80, 0.45));
 }
 
 .intro-message {
   width: min(100%, 420px);
   margin: 0;
-  font-size: clamp(1.55rem, 8vw, 2.25rem);
-  line-height: 1.08;
+  opacity: 0;
+  font-size: clamp(1.3rem, 6.4vw, 2rem);
+  line-height: 1.12;
   text-wrap: balance;
   text-shadow: 0 4px 0 rgba(0, 43, 130, 0.58);
 }
 
 .start-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   width: min(100%, 260px);
-  min-height: 58px;
+  min-height: 54px;
   border: 0;
   border-radius: 999px;
+  opacity: 0;
   color: #073a90;
   background: linear-gradient(180deg, #fff176 0%, #ffc400 100%);
   box-shadow: 0 8px 0 #d88900, 0 16px 24px rgba(0, 23, 79, 0.35);
   font-size: 1.15rem;
   font-weight: 900;
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transform: translateY(0) scale(1);
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.start-button::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  transform: scale(0.82);
+}
+
+.start-button:hover {
+  filter: brightness(1.06) saturate(1.08);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 0 #d88900, 0 20px 28px rgba(0, 23, 79, 0.38);
 }
 
 .start-button:active {
-  transform: translateY(6px);
+  filter: brightness(0.98);
+  transform: translateY(6px) scale(0.98);
   box-shadow: 0 2px 0 #d88900, 0 8px 16px rgba(0, 23, 79, 0.3);
 }
 
@@ -175,15 +217,216 @@ button {
   outline-offset: 4px;
 }
 
+/* Secuencia de entrada de la introduccion */
+.intro-screen.is-presented .intro-logo {
+  animation: logo-drop-in 700ms ease-out forwards;
+}
+
+.intro-screen.is-presented .intro-sonic {
+  animation: sonic-slide-in 750ms 450ms ease-out forwards;
+}
+
+.intro-screen.is-presented .intro-message {
+  animation: fade-in 600ms 1050ms ease forwards;
+}
+
+.intro-screen.is-presented .start-button {
+  animation: fade-in-up 600ms 1450ms ease forwards;
+}
+
+.intro-screen.is-presented .start-button::after {
+  animation: start-button-idle 2400ms 2300ms ease-in-out infinite;
+}
+
+.intro-screen.is-leaving {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.intro-screen.is-leaving .intro-message,
+.intro-screen.is-leaving .start-button {
+  animation: fade-out 260ms ease forwards;
+}
+
+.intro-screen.is-leaving .intro-sonic {
+  animation: sonic-run-out 1150ms ease-in forwards;
+}
+
+/* Escenario Green Hill preparado para el siguiente sprint */
+.green-hill-screen {
+  z-index: 1;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  background-image: linear-gradient(rgba(0, 89, 214, 0.08), rgba(0, 44, 120, 0.18)),
+    url("assets/green hill.jpg");
+  background-position: center;
+  background-size: cover;
+  transition: opacity 1100ms ease, visibility 1100ms ease;
+}
+
+.green-hill-screen.is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.green-hill-sonic {
+  position: absolute;
+  left: clamp(32px, 18vw, 180px);
+  bottom: clamp(42px, 12vh, 110px);
+  width: min(42vw, 190px);
+  height: auto;
+  opacity: 0;
+  transform: translateX(-120vw) rotate(-8deg);
+  filter: drop-shadow(0 14px 18px rgba(0, 35, 75, 0.38));
+}
+
+.green-hill-screen.is-sonic-arriving .green-hill-sonic {
+  animation: green-sonic-enter 1300ms ease-out forwards;
+}
+
+@keyframes logo-drop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-70px) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sonic-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-110vw) rotate(-8deg);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translateX(10px) rotate(2deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes start-button-idle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+
+  50% {
+    opacity: 0.32;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sonic-run-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0) rotate(0) skewX(0deg) scaleY(1);
+  }
+
+  18% {
+    opacity: 1;
+    transform: translateX(10px) rotate(-8deg) skewX(-8deg) scaleY(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(140vw) rotate(-10deg) skewX(-10deg) scaleY(0.9);
+  }
+}
+
+@keyframes green-sonic-enter {
+  0% {
+    opacity: 1;
+    transform: translateX(-120vw) rotate(-10deg) skewX(-8deg) scaleY(0.92);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translateX(18px) rotate(-4deg) skewX(-5deg) scaleY(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0) skewX(0deg) scaleY(1);
+  }
+}
+
 /* Ajustes para pantallas mas grandes */
 @media (min-width: 720px) {
   .intro-screen {
     padding: 48px 28px;
-    grid-template-rows: minmax(300px, 1fr) auto auto;
+    grid-template-rows: minmax(0, 1fr) auto auto;
   }
 
   .loader-ring {
     width: 42px;
     height: 42px;
+  }
+
+  .intro-logo {
+    width: min(44vw, 340px);
+  }
+}
+
+/* Ajuste para celulares con poca altura disponible */
+@media (max-height: 680px) {
+  .intro-screen {
+    padding-block: 18px;
+    gap: 10px;
+  }
+
+  .intro-sonic {
+    width: min(62vw, 230px);
+    max-height: 34dvh;
+  }
+
+  .intro-message {
+    font-size: clamp(1.15rem, 5.8vw, 1.6rem);
+  }
+
+  .start-button {
+    min-height: 50px;
   }
 }
