@@ -31,13 +31,44 @@
   </main>
 
   <!-- Escenario preparado para el comienzo del juego -->
-  <section class="green-hill-screen is-hidden" id="greenHillScreen" aria-label="Escenario Green Hill">
-    <img class="green-hill-sonic" id="greenHillSonic" src="assets/sonic.png" alt="Sonic en Green Hill">
-  </section>
+ <section class="green-hill-screen is-hidden" id="greenHillScreen" aria-label="Escenario Green Hill">
+
+  <!-- Interfaz de progreso -->
+  <div class="mission-progress" id="missionProgress">
+    <span>💍 <strong id="ringCount">0</strong> / 15</span>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- Objetivo de la misión -->
+  <div class="mission-objective" id="missionObjective">
+    <p class="mission-label">🎯 MISIÓN</p>
+    <h2>¡Ayudá a Sonic!</h2>
+    <p>Recuperá los 15 anillos.</p>
+  </div>
+
+  <!-- Cuenta regresiva -->
+  <div class="countdown" id="countdown" aria-live="assertive"></div>
+
+  <!-- Anillo del juego -->
+  <button class="game-ring is-hidden" id="gameRing" type="button" aria-label="Atrapar anillo">
+    <img src="assets/anillo.png" alt="">
+  </button>
+
+  <img
+    class="green-hill-sonic"
+    id="greenHillSonic"
+    src="assets/sonic.png"
+    alt="Sonic en Green Hill"
+  >
+</section>
 
   <!-- Audios de interaccion y musica de fondo -->
   <audio id="playSound" src="assets/play.mp3" data-fallback-src="assets/enter.mp3" preload="auto"></audio>
   <audio id="backgroundMusic" src="assets/8bits.mp3" preload="auto" loop></audio>
+  <audio id="coinSound" src="assets/coin.mp3" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>

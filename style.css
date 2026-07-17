@@ -430,3 +430,213 @@ button {
     min-height: 50px;
   }
 }
+
+/* =========================================
+   Sprint 3 - Inicio de la misión
+========================================= */
+
+.mission-progress {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  z-index: 5;
+  width: min(86vw, 360px);
+  transform: translateX(-50%);
+  opacity: 0;
+  text-align: center;
+  transition: opacity 400ms ease;
+}
+
+.green-hill-screen.is-mission-starting .mission-progress {
+  opacity: 1;
+}
+
+.mission-progress > span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-shadow: 0 3px 0 rgba(0, 43, 130, 0.5);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 14px;
+  overflow: hidden;
+  border: 3px solid #ffffff;
+  border-radius: 999px;
+  background: rgba(0, 30, 100, 0.45);
+  box-shadow: 0 4px 10px rgba(0, 30, 100, 0.35);
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ffe45c, #ffc400);
+  transition: width 350ms ease;
+}
+
+/* Objetivo */
+
+.mission-objective {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 6;
+  width: min(86vw, 360px);
+  padding: 24px 20px;
+  border: 3px solid #ffffff;
+  border-radius: 20px;
+  background: rgba(253, 253, 253, 0.95);
+  box-shadow: 0 12px 30px rgba(0, 20, 80, 0.4);
+  opacity: 0;
+  text-align: center;
+  transform: translate(-50%, -50%) scale(0.85);
+}
+
+.mission-objective.is-visible {
+  animation: mission-objective-in 500ms ease-out forwards;
+}
+
+.mission-objective.is-hidden {
+  animation: mission-objective-out 400ms ease forwards;
+}
+
+.mission-label {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #004aa8;
+}
+
+.mission-objective h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.5rem, 7vw, 2.2rem);
+  color: #004aa8;
+}
+
+.mission-objective p:last-child {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #004aa8;
+}
+
+/* Cuenta regresiva */
+
+.countdown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 7;
+  font-size: clamp(5rem, 28vw, 9rem);
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 8px 0 rgba(0, 43, 130, 0.55);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+}
+
+.countdown.is-visible {
+  animation: countdown-pop 500ms ease-out forwards;
+}
+
+/* Anillo */
+
+.game-ring {
+  position: absolute;
+  z-index: 4;
+  width: 76px;
+  height: 76px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-120px);
+}
+
+.game-ring img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(255, 225, 67, 0.9));
+}
+
+.game-ring.is-visible {
+  animation: ring-fall 1000ms ease-out forwards;
+}
+
+.game-ring.is-caught {
+  pointer-events: none;
+  animation: ring-caught 300ms ease-out forwards;
+}
+
+/* Animaciones */
+
+@keyframes mission-objective-in {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes mission-objective-out {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+@keyframes countdown-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes ring-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-120px) scale(0.7);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ring-caught {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.5) rotate(20deg);
+  }
+}

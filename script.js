@@ -3,11 +3,82 @@ const loaderScreen = document.getElementById("loaderScreen");
 const introScreen = document.getElementById("introScreen");
 const greenHillScreen = document.getElementById("greenHillScreen");
 const startButton = document.getElementById("startButton");
+const missionProgress = document.getElementById("missionProgress");
+const missionObjective = document.getElementById("missionObjective");
+const countdown = document.getElementById("countdown");
+const gameRing = document.getElementById("gameRing");
+const ringCount = document.getElementById("ringCount");
+const progressFill = document.getElementById("progressFill");
 
 // Guardamos los efectos de sonido en un objeto para poder sumar mas despues.
 const soundEffects = {
   play: document.getElementById("playSound"),
+  coin: document.getElementById("coinSound"),
 };
+
+const TOTAL_RINGS = 15;
+let collectedRings = 0;
+
+function updateProgress() {
+  ringCount.textContent = collectedRings;
+
+  const progressPercentage = (collectedRings / TOTAL_RINGS) * 100;
+
+  progressFill.style.width = `${progressPercentage}%`;
+}
+
+function showMissionObjective() {
+  missionObjective.classList.remove("is-hidden");
+  missionObjective.classList.add("is-visible");
+}
+
+async function startCountdown() {
+  missionObjective.classList.remove("is-visible");
+  missionObjective.classList.add("is-hidden");
+
+  await wait(500);
+
+  const countdownValues = ["3", "2", "1", "¡YA!"];
+
+  for (const value of countdownValues) {
+    countdown.textContent = value;
+
+    countdown.classList.remove("is-visible");
+
+    // Permite reiniciar la animación cada vez que cambia el número.
+    void countdown.offsetWidth;
+
+    countdown.classList.add("is-visible");
+
+    await wait(value === "¡YA!" ? 500 : 800);
+  }
+
+  showFirstRing();
+}
+
+function showFirstRing() {
+  gameRing.classList.remove("is-hidden");
+
+  requestAnimationFrame(() => {
+    gameRing.classList.add("is-visible");
+  });
+}
+
+async function collectRing() {
+  if (gameRing.classList.contains("is-caught")) {
+    return;
+  }
+
+  gameRing.classList.add("is-caught");
+
+  await playSoundEffect("coin");
+
+  collectedRings += 1;
+
+  updateProgress();
+}
+
+gameRing.addEventListener("click", collectRing);
 
 // La musica de fondo vive separada de los efectos porque se reproduce en loop.
 const backgroundMusic = document.getElementById("backgroundMusic");
@@ -161,8 +232,18 @@ async function runIntroToGreenHillTransition() {
 
   await wait(1150);
 
-  introScreen.classList.add("is-hidden");
-  greenHillScreen.classList.add("is-sonic-arriving");
+introScreen.classList.add("is-hidden");
+greenHillScreen.classList.add("is-sonic-arriving");
+
+await wait(1400);
+
+greenHillScreen.classList.add("is-mission-starting");
+
+showMissionObjective();
+
+await wait(2200);
+
+startCountdown();
 }
 
 startButton.addEventListener("click", () => {
