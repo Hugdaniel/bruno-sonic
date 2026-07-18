@@ -19,6 +19,9 @@ const soundEffects = {
 const TOTAL_RINGS = 15;
 let collectedRings = 0;
 
+let ringAnimation = null;
+const SAFE_MARGIN = 40; // Margen seguro para que el anillo no se salga de la pantalla
+
 function updateProgress() {
   ringCount.textContent = collectedRings;
 
@@ -38,7 +41,7 @@ async function startCountdown() {
 
   await wait(500);
 
-  const countdownValues = ["3", "2", "1", "¡YA!"];
+  const countdownValues = ["3", "2", "1", ];
 
   for (const value of countdownValues) {
     countdown.textContent = value;
@@ -50,33 +53,97 @@ async function startCountdown() {
 
     countdown.classList.add("is-visible");
 
-    await wait(value === "¡YA!" ? 500 : 800);
+    // await wait(value === "¡YA!" ? 500 : 800);
+    await wait(800);
   }
+
+  countdown.classList.remove("is-visible");
+  countdown.textContent = "";
+
+  await wait(150);
 
   showFirstRing();
 }
 
 function showFirstRing() {
-  gameRing.classList.remove("is-hidden");
 
-  requestAnimationFrame(() => {
-    gameRing.classList.add("is-visible");
-  });
+  gameRing.classList.remove("is-hidden");
+  gameRing.classList.remove("is-caught");
+
+  // prueba de animación con clase, pero no funciona bien en todos los navegadores
+  gameRing.style.left = "150px";
+gameRing.style.top = "50px";
+gameRing.style.opacity = "1";
+gameRing.style.visibility = "visible";
+gameRing.style.display = "block";
+
+
+
+  // Posición horizontal aleatoria
+  const maxX = window.innerWidth - gameRing.offsetWidth - SAFE_MARGIN;
+
+  const randomX =
+    SAFE_MARGIN + Math.random() * (maxX - SAFE_MARGIN);
+
+  gameRing.style.left = `${randomX}px`;
+
+  // Arranca arriba
+  gameRing.style.top = "-90px";
+
+  startRingFall();
 }
 
-async function collectRing() {
-  if (gameRing.classList.contains("is-caught")) {
-    return;
+function startRingFall() {
+
+  let y = -90;
+
+  let speed = 3;
+
+if (collectedRings >= 5)
+    speed = 4.5;
+
+if (collectedRings >= 10)
+    speed = 7;
+
+  cancelAnimationFrame(ringAnimation);
+
+  function animate() {
+
+    y += speed;
+
+    gameRing.style.top = `${y}px`;
+
+    if (y > window.innerHeight) {
+
+      showFirstRing();
+
+      return;
+    }
+
+    ringAnimation = requestAnimationFrame(animate);
+
   }
 
-  gameRing.classList.add("is-caught");
+  animate();
 
-  await playSoundEffect("coin");
-
-  collectedRings += 1;
-
-  updateProgress();
 }
+
+  // Maneja la recolección del anillo cuando el jugador hace click
+  async function collectRing() {
+    const flyingRing = createFlyingRing();
+
+    gameRing.classList.add("is-caught");
+
+    await playSoundEffect("coin");
+
+    collectedRings += 1;
+
+    updateProgress();
+
+    
+    await wait(300);
+    showFirstRing();
+  }
 
 gameRing.addEventListener("click", collectRing);
 
@@ -251,3 +318,72 @@ startButton.addEventListener("click", () => {
 });
 
 initializeSprint();
+
+
+// barra de progreso
+function getProgressTarget() {
+
+    const rect = progressFill.getBoundingClientRect();
+
+    return {
+        x: rect.left + rect.width,
+        y: rect.top + rect.height / 2
+    };
+}
+
+// anillo clon
+function createFlyingRing() {
+
+  const ringRect = gameRing.getBoundingClientRect();
+
+  const flyingRing = document.createElement("img");
+
+  flyingRing.src = "assets/anillo.png";
+  flyingRing.className = "flying-ring";
+
+  flyingRing.style.left = `${ringRect.left}px`;
+  flyingRing.style.top = `${ringRect.top}px`;
+
+  document.body.appendChild(flyingRing);
+
+  const target = getCounterTarget();
+
+flyingRing.animate(
+    [
+        {
+            transform: "translate(0,0) scale(1) rotate(0deg)",
+            opacity: 1
+        },
+        {
+            transform: `translate(${target.x - ringRect.left}px, ${target.y - ringRect.top}px)
+                        scale(.35)
+                        rotate(720deg)`,
+            opacity: .2
+        }
+    ],
+    {
+        duration: 450,
+        easing: "ease-in-out",
+        fill: "forwards"
+    }
+);
+
+setTimeout(() => {
+    flyingRing.remove();
+}, 450);
+
+  return flyingRing;
+}
+
+// animacion de absorcion del anillo
+function getCounterTarget() {
+
+    const rect = ringCount.getBoundingClientRect();
+
+    return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+    };
+
+}
+
