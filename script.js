@@ -100,10 +100,10 @@ function startRingFall() {
   let speed = 3;
 
 if (collectedRings >= 5)
-    speed = 4.5;
+    speed = 3.5;
 
 if (collectedRings >= 10)
-    speed = 7;
+    speed = 4;
 
   cancelAnimationFrame(ringAnimation);
 
