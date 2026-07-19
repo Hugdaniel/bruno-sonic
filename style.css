@@ -550,8 +550,8 @@ button {
   z-index: 4;
 
   /* Zona táctil */
-  width: 110px;
-  height: 110px;
+  width: 125px;
+  height: 125px;
 
   padding: 0;
   border: 0;
