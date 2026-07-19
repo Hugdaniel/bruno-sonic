@@ -16,6 +16,8 @@ const soundEffects = {
   coin: document.getElementById("coinSound"),
 };
 
+let gameFinished = false;
+
 const TOTAL_RINGS = 15;
 let collectedRings = 0;
 
@@ -77,6 +79,9 @@ gameRing.style.opacity = "1";
 gameRing.style.visibility = "visible";
 gameRing.style.display = "block";
 
+if(gameFinished) {
+    return;
+  }
 
 
   // Posición horizontal aleatoria
@@ -130,6 +135,19 @@ if (collectedRings >= 10)
 
   // Maneja la recolección del anillo cuando el jugador hace click
   async function collectRing() {
+    if (gameFinished) {
+      return;
+    }
+    if (gameRing.classList.contains("is-caught")) {
+      return;
+    }
+
+    if (collectedRings >= TOTAL_RINGS) {
+      gameFinished = true;
+      finishGame();
+      launchConfetti();
+      return;
+    }
     const flyingRing = createFlyingRing();
 
     gameRing.classList.add("is-caught");
@@ -144,6 +162,7 @@ if (collectedRings >= 10)
           await wait(300);
 
       finishGame();
+
       launchConfetti();
       return;
     }
