@@ -100,10 +100,10 @@ function startRingFall() {
   let speed = 3;
 
 if (collectedRings >= 5)
-    speed = 3.5;
+    speed = 3.2;
 
 if (collectedRings >= 10)
-    speed = 4;
+    speed = 3.7;
 
   cancelAnimationFrame(ringAnimation);
 
@@ -140,10 +140,29 @@ if (collectedRings >= 10)
 
     updateProgress();
 
+    if (collectedRings >= TOTAL_RINGS) {
+          await wait(300);
+
+      finishGame();
+      launchConfetti();
+      return;
+    }
+
     
-    await wait(300);
     showFirstRing();
   }
+
+  function launchConfetti() {
+
+  confetti({
+    particleCount: 150,
+    spread: 80,
+    origin: {
+      y: 0.6
+    }
+  });
+
+}
 
 gameRing.addEventListener("click", collectRing);
 

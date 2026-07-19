@@ -65,11 +65,32 @@
   >
 </section>
 
+<!-- overlay para mostrar mensaje de finalización -->
+ <section id="victoryScreen" class="victory-screen is-hidden">
+
+    <div class="victory-card">
+
+        <h2>🎉 ¡MISIÓN CUMPLIDA!</h2>
+
+        <p>
+            Recuperaste todos los anillos.
+            Sonic tiene una sorpresa para vos.
+        </p>
+
+        <button id="showInvitationButton">
+            MIRA MI INVITACIÓN!!
+        </button>
+
+    </div>
+
+</section>
+
   <!-- Audios de interaccion y musica de fondo -->
   <audio id="playSound" src="assets/play.mp3" data-fallback-src="assets/enter.mp3" preload="auto"></audio>
   <audio id="backgroundMusic" src="assets/8bits.mp3" preload="auto" loop></audio>
   <audio id="coinSound" src="assets/coin.mp3" preload="auto"></audio>
-
+<!-- SCRIPTS -->
+ <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
