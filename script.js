@@ -68,6 +68,9 @@ async function startCountdown() {
 }
 
 function showFirstRing() {
+  if(gameFinished) {
+    return;
+  }
 
   gameRing.classList.remove("is-hidden");
   gameRing.classList.remove("is-caught");
@@ -79,9 +82,7 @@ gameRing.style.opacity = "1";
 gameRing.style.visibility = "visible";
 gameRing.style.display = "block";
 
-if(gameFinished) {
-    return;
-  }
+
 
 
   // Posición horizontal aleatoria
@@ -119,6 +120,9 @@ if (collectedRings >= 10)
     gameRing.style.top = `${y}px`;
 
     if (y > window.innerHeight) {
+      if(gameFinished){
+    return;
+  }
 
       showFirstRing();
 
@@ -142,24 +146,24 @@ if (collectedRings >= 10)
       return;
     }
 
-    if (collectedRings >= TOTAL_RINGS) {
-      gameFinished = true;
-      finishGame();
-      launchConfetti();
-      return;
-    }
+   
     const flyingRing = createFlyingRing();
 
     gameRing.classList.add("is-caught");
 
     await playSoundEffect("coin");
 
+    await wait(450);
+
     collectedRings += 1;
 
     updateProgress();
 
     if (collectedRings >= TOTAL_RINGS) {
+      gameFinished = true;
           await wait(300);
+
+          cancelAnimationFrame(ringAnimation);
 
       finishGame();
 
