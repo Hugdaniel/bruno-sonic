@@ -719,7 +719,52 @@ sendButton.addEventListener("click",async()=>{
     sendButton.textContent="ENVIANDO...";
 
     await sendAttendance();
-
     sendButton.textContent="✔ CONFIRMADO";
 
-});
+    sendButton.disabled=false;  
+
+    function showConfirmationMessage(){
+
+    const message = document.createElement("div");
+
+    message.className = "confirmation-message";
+
+    message.innerHTML = `
+        <div class="confirmation-card">
+            <div class="confirmation-ring">💍</div>
+
+            <h3>¡MISIÓN COMPLETADA!</h3>
+
+            <p>
+                Tu asistencia fue confirmada.<br>
+                Sonic te espera para la aventura 🚀
+            </p>
+
+            <button class="close-confirmation">
+                CONTINUAR
+            </button>
+        </div>
+    `;
+
+
+    document.body.appendChild(message);
+
+
+    setTimeout(()=>{
+
+        message.classList.add("is-visible");
+
+    },50);
+
+
+    message.querySelector(".close-confirmation")
+    .addEventListener("click",()=>{
+
+        message.remove();
+
+    });
+
+}
+
+
+}) ;

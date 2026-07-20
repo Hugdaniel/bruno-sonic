@@ -1108,3 +1108,103 @@ button {
 100%{transform:translateX(0);}
 
 }
+
+.confirmation-message{
+
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:.3s;
+
+    z-index:9999;
+
+}
+
+
+.confirmation-message.is-visible{
+
+    opacity:1;
+    pointer-events:auto;
+
+}
+
+
+.confirmation-card{
+
+    width:85%;
+    max-width:350px;
+
+    background:#111;
+
+    border:3px solid #ffd900;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-align:center;
+
+    color:white;
+
+    box-shadow:
+    0 0 20px #ffd900;
+
+
+    transform:scale(.8);
+
+    animation:
+    popCard .4s forwards;
+
+}
+
+
+@keyframes popCard{
+
+    to{
+        transform:scale(1);
+    }
+
+}
+
+
+.confirmation-ring{
+
+    font-size:50px;
+
+}
+
+
+.confirmation-card h3{
+
+    color:#ffd900;
+
+    font-family:monospace;
+
+}
+
+
+.close-confirmation{
+
+    margin-top:20px;
+
+    padding:12px 25px;
+
+    background:#006cff;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+}
