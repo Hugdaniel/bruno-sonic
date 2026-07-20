@@ -9,6 +9,12 @@ const countdown = document.getElementById("countdown");
 const gameRing = document.getElementById("gameRing");
 const ringCount = document.getElementById("ringCount");
 const progressFill = document.getElementById("progressFill");
+const victoryScreen = document.getElementById("victoryScreen");
+const invitationScreen =
+document.getElementById("invitationScreen");
+
+const showInvitationButton =
+document.getElementById("showInvitationButton");
 
 // Guardamos los efectos de sonido en un objeto para poder sumar mas despues.
 const soundEffects = {
@@ -187,6 +193,20 @@ if (collectedRings >= 10)
 
 }
 
+// Muestra la pantalla de victoria y reinicia el juego después de un tiempo
+function finishGame() {
+
+  cancelAnimationFrame(ringAnimation);
+
+  gameRing.classList.add("is-hidden");
+
+  victoryScreen.classList.remove("is-hidden");
+
+  requestAnimationFrame(() => {
+    victoryScreen.classList.add("is-visible");
+  });
+
+}
 gameRing.addEventListener("click", collectRing);
 
 // La musica de fondo vive separada de los efectos porque se reproduce en loop.
@@ -428,4 +448,24 @@ function getCounterTarget() {
     };
 
 }
+
+showInvitationButton.addEventListener("click", () => {
+
+    victoryScreen.classList.remove("is-visible");
+
+    setTimeout(() => {
+
+        victoryScreen.classList.add("is-hidden");
+
+        invitationScreen.classList.remove("is-hidden");
+
+        requestAnimationFrame(() => {
+
+            invitationScreen.classList.add("is-visible");
+
+        });
+
+    },300);
+
+});
 

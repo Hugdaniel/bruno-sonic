@@ -15,6 +15,16 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #ffffff;
   background: linear-gradient(160deg, #0059d6 0%, #08a8ff 48%, #004aa8 100%);
+  font-family:"arial, sans-serif";
+}
+
+.game-ui,
+.intro-message,
+.mission-objective,
+.countdown,
+.victory-card h2,
+#showInvitationButton{
+    font-family: "Press Start 2P", cursive;
 }
 
 button,
@@ -648,4 +658,254 @@ button {
     width:70px;
     pointer-events:none;
     z-index:9999;
+}
+
+/* cartel victoria */
+.victory-screen {
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 30;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:rgba(0,0,0,.45);
+
+  opacity:0;
+  visibility:hidden;
+
+  transition:.5s ease;
+
+}
+
+
+.victory-screen.is-visible {
+
+  opacity:1;
+  visibility:visible;
+
+}
+
+
+.victory-card {
+
+  width:min(90%,380px);
+
+  padding:30px;
+
+  text-align:center;
+
+  background:white;
+
+  border-radius:25px;
+
+  color:#0059d6;
+
+  transform:scale(.7);
+
+  transition:.5s ease;
+
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+}
+
+
+.victory-screen.is-visible .victory-card {
+
+  transform:scale(1);
+
+}
+
+
+.victory-card h2 {
+
+  margin:0 0 15px;
+
+  font-size:2rem;
+
+}
+
+
+.victory-card p {
+
+  color:#333;
+
+  font-size:1.1rem;
+
+}
+
+
+#showInvitationButton {
+
+  margin-top:20px;
+
+  width:100%;
+
+  padding:15px;
+
+  border:0;
+
+  border-radius:50px;
+
+  background:#ffc400;
+
+  color:#073a90;
+
+  font-weight:900;
+
+  font-size:1.1rem;
+
+}
+
+/* invitacion */
+/*==============================
+        INVITACIÓN
+===============================*/
+
+.invitation-screen{
+
+    position:fixed;
+    inset:0;
+
+    z-index:40;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:24px;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,.45),
+        rgba(0,0,0,.45)
+    ),
+    url("assets/green hill.jpg");
+
+    background-size:cover;
+    background-position:center;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.45s;
+
+}
+
+.invitation-screen.is-visible{
+
+    opacity:1;
+    visibility:visible;
+
+}
+
+.invitation-card{
+
+    width:min(100%,380px);
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:
+    0 20px 45px rgba(0,0,0,.35);
+
+    transform:scale(.9);
+
+    transition:.4s;
+
+}
+
+.invitation-screen.is-visible .invitation-card{
+
+    transform:scale(1);
+
+}
+
+.invitation-logo{
+
+    width:220px;
+
+    max-width:100%;
+
+    margin:auto;
+    margin-bottom:28px;
+
+}
+
+.invitation-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    margin-bottom:30px;
+
+}
+
+.info-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    font-size:1.1rem;
+
+    color:#0b4ec7;
+
+    font-weight:700;
+
+}
+
+.icon{
+
+    font-size:28px;
+
+}
+
+.attendance-button{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:50px;
+
+    padding:18px;
+
+    background:#ffc400;
+
+    color:#003a91;
+
+    font-weight:900;
+
+    font-size:1rem;
+
+    cursor:pointer;
+
+    box-shadow:
+    0 8px 0 #d99200;
+
+    transition:.15s;
+
+}
+
+.attendance-button:active{
+
+    transform:translateY(6px);
+
+    box-shadow:
+    0 2px 0 #d99200;
+
 }
