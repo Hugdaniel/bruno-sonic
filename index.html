@@ -131,6 +131,87 @@
 
 </section>
 
+<!-- slider confirmacion -->
+ <section id="attendanceSlider" class="attendance-slider">
+
+    <div class="attendance-panel">
+
+        <header class="attendance-header">
+
+            <button
+                id="closeAttendance"
+                class="back-button"
+                type="button">
+
+                ←
+
+            </button>
+
+            <h2>Confirmar asistencia</h2>
+
+        </header>
+
+        <div class="attendance-body">
+
+            <label>
+
+                Nombre
+
+                <input
+                    id="guestName"
+                    type="text"
+                    placeholder="Escribí tu nombre">
+                    <small id="nameError" class="field-error"></small>
+
+            </label>
+
+            <div class="counter">
+
+    <span>Adultos</span>
+
+    <div class="counter-controls">
+
+        <button id="adultMinus" type="button">−</button>
+
+        <span id="adultValue" class="counter-value">2</span>
+
+        <button id="adultPlus" type="button">+</button>
+        <small id="attendanceError" class="field-error"></small>
+
+
+    </div>
+
+</div>
+
+<div class="counter">
+
+    <span>Niños</span>
+
+    <div class="counter-controls">
+
+        <button id="childMinus" type="button">−</button>
+
+        <span id="childValue" class="counter-value">1</span>
+
+        <button id="childPlus" type="button">+</button>
+        <small id="childError" class="field-error"></small>
+
+
+    </div>
+
+</div>
+            <button class="send-button">
+
+                ENVIAR
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
   <!-- Audios de interaccion y musica de fondo -->
   <audio id="playSound" src="assets/play.mp3" data-fallback-src="assets/enter.mp3" preload="auto"></audio>
   <audio id="backgroundMusic" src="assets/8bits.mp3" preload="auto" loop></audio>

@@ -1,3 +1,6 @@
+// -----------------------------
+// INTERFACE REFERENCES
+// -----------------------------
 // Referencias principales de la interfaz
 const loaderScreen = document.getElementById("loaderScreen");
 const introScreen = document.getElementById("introScreen");
@@ -16,12 +19,47 @@ document.getElementById("invitationScreen");
 const showInvitationButton =
 document.getElementById("showInvitationButton");
 
+const attendanceSlider =
+document.getElementById("attendanceSlider");
+
+const attendanceButton =
+document.getElementById("attendanceButton");
+
+const closeAttendance =
+document.getElementById("closeAttendance");
+
+const adultMinus = document.getElementById("adultMinus");
+const adultPlus = document.getElementById("adultPlus");
+const adultValue = document.getElementById("adultValue");
+
+const childMinus = document.getElementById("childMinus");
+const childPlus = document.getElementById("childPlus");
+const childValue = document.getElementById("childValue");
+const guestName = document.getElementById("guestName");
+
+const nameError = document.getElementById("nameError");
+
+const attendanceError =
+document.getElementById("attendanceError");
+
+const sendButton =
+document.querySelector(".send-button");
+
+let adults = 2;
+let children = 1;
+
+const SHEET_API_URL =
+"https://rsvp-appi.85hbdaniel.workers.dev/";
+
 // Guardamos los efectos de sonido en un objeto para poder sumar mas despues.
 const soundEffects = {
   play: document.getElementById("playSound"),
   coin: document.getElementById("coinSound"),
 };
 
+// -----------------------------
+// GAME STATE
+// -----------------------------
 let gameFinished = false;
 
 const TOTAL_RINGS = 15;
@@ -30,6 +68,9 @@ let collectedRings = 0;
 let ringAnimation = null;
 const SAFE_MARGIN = 40; // Margen seguro para que el anillo no se salga de la pantalla
 
+// -----------------------------
+// UI UPDATES
+// -----------------------------
 function updateProgress() {
   ringCount.textContent = collectedRings;
 
@@ -43,6 +84,9 @@ function showMissionObjective() {
   missionObjective.classList.add("is-visible");
 }
 
+// -----------------------------
+// GAME FLOW: COUNTDOWN & RING SPAWN
+// -----------------------------
 async function startCountdown() {
   missionObjective.classList.remove("is-visible");
   missionObjective.classList.add("is-hidden");
@@ -143,8 +187,11 @@ if (collectedRings >= 10)
 
 }
 
-  // Maneja la recolección del anillo cuando el jugador hace click
-  async function collectRing() {
+// -----------------------------
+// GAME ACTIONS
+// -----------------------------
+// Maneja la recolección del anillo cuando el jugador hace click
+async function collectRing() {
     if (gameFinished) {
       return;
     }
@@ -209,6 +256,9 @@ function finishGame() {
 }
 gameRing.addEventListener("click", collectRing);
 
+// -----------------------------
+// ASSETS & AUDIO
+// -----------------------------
 // La musica de fondo vive separada de los efectos porque se reproduce en loop.
 const backgroundMusic = document.getElementById("backgroundMusic");
 
@@ -229,6 +279,9 @@ const minimumLoaderTime = 3000;
 let introTransitionStarted = false;
 
 // Precarga de imagenes
+// -----------------------------
+// PRELOADING
+// -----------------------------
 function preloadImage(src) {
   return new Promise((resolve) => {
     const image = new Image();
@@ -237,6 +290,83 @@ function preloadImage(src) {
     image.onerror = resolve;
     image.src = src;
   });
+}
+
+function updateAttendanceCounters(){
+
+  adultValue.textContent = adults;
+  childValue.textContent = children;
+
+}
+
+// slider de asistencia
+// Attendance slider
+function openAttendance(){
+
+  attendanceSlider.classList.add("is-open");
+
+}
+
+function closeAttendancePanel(){
+
+  attendanceSlider.classList.remove("is-open");
+
+}
+
+function showFieldError(element,message){
+
+    element.textContent=message;
+
+    element.classList.add("is-visible");
+
+}
+function clearFieldError(element){
+
+    element.textContent="";
+
+    element.classList.remove("is-visible");
+
+}
+
+function validateAttendance(){
+
+    let valid=true;
+
+    clearFieldError(nameError);
+    clearFieldError(attendanceError);
+
+    guestName.classList.remove("input-error");
+
+    const name=guestName.value.trim();
+
+    if(name===""){
+
+        showFieldError(
+            nameError,
+            "Escribí tu nombre."
+        );
+
+        guestName.classList.add("input-error");
+
+        guestName.focus();
+
+        valid=false;
+
+    }
+
+    if(adults+children===0){
+
+        showFieldError(
+            attendanceError,
+            "Debe asistir al menos una persona."
+        );
+
+        valid=false;
+
+    }
+
+    return valid;
+
 }
 
 // Reutilizamos enter.mp3 si play.mp3 todavia no existe en la carpeta assets.
@@ -287,6 +417,9 @@ function preloadAudio(audio) {
 }
 
 // Transicion entre loader e introduccion
+// -----------------------------
+// INTRO / TRANSITIONS
+// -----------------------------
 function showIntroScreen() {
   introScreen.classList.remove("is-hidden");
   loaderScreen.classList.add("is-loaded");
@@ -309,6 +442,9 @@ async function initializeSprint() {
 }
 
 // Creamos una pausa reutilizable para ordenar animaciones por etapas.
+// -----------------------------
+// UTILITIES
+// -----------------------------
 function wait(milliseconds) {
   return new Promise((resolve) => {
     setTimeout(resolve, milliseconds);
@@ -316,6 +452,9 @@ function wait(milliseconds) {
 }
 
 // Reproducimos efectos desde una funcion central para no repetir logica.
+// -----------------------------
+// AUDIO HELPERS
+// -----------------------------
 async function playSoundEffect(soundName) {
   const audio = soundEffects[soundName];
 
@@ -341,6 +480,9 @@ function startBackgroundMusic() {
 }
 
 // Coordinamos la transicion visual sin agregar todavia logica de juego.
+// -----------------------------
+// INTRO TO GAME TRANSITION
+// -----------------------------
 async function runIntroToGreenHillTransition() {
   if (introTransitionStarted) {
     return;
@@ -382,17 +524,9 @@ startButton.addEventListener("click", () => {
 initializeSprint();
 
 
-// barra de progreso
-function getProgressTarget() {
-
-    const rect = progressFill.getBoundingClientRect();
-
-    return {
-        x: rect.left + rect.width,
-        y: rect.top + rect.height / 2
-    };
-}
-
+// -----------------------------
+// PROGRESS BAR & ANIMATIONS
+// -----------------------------
 // anillo clon
 function createFlyingRing() {
 
@@ -437,6 +571,18 @@ setTimeout(() => {
   return flyingRing;
 }
 
+function pressAnimation(button){
+
+    button.classList.add("is-pressed");
+
+    setTimeout(() => {
+
+        button.classList.remove("is-pressed");
+
+    },120);
+
+}
+
 // animacion de absorcion del anillo
 function getCounterTarget() {
 
@@ -449,6 +595,45 @@ function getCounterTarget() {
 
 }
 
+async function sendAttendance(){
+
+    const data={
+
+        nombre:guestName.value.trim(),
+
+        adultos:adults,
+
+        ninos:children
+
+    };
+
+    console.log("Enviando datos de asistencia:", data);
+
+    const response=await fetch(SHEET_API_URL,{
+
+        method:"POST",
+
+        headers:{
+
+            "Content-Type":"application/json"
+
+        },
+
+        body:JSON.stringify(data)
+
+    });
+
+    console.log("Respuesta del servidor:", response);
+    const result = await response.text();
+    console.log("Respuesta del servidor (texto):", result);
+
+    return await response.json();
+
+}
+
+// -----------------------------
+// UI EVENTS
+// -----------------------------
 showInvitationButton.addEventListener("click", () => {
 
     victoryScreen.classList.remove("is-visible");
@@ -469,3 +654,84 @@ showInvitationButton.addEventListener("click", () => {
 
 });
 
+// eventos de asistencia
+attendanceButton.addEventListener(
+  "click",
+  openAttendance
+);
+
+closeAttendance.addEventListener(
+  "click",
+  closeAttendancePanel
+);
+
+
+
+adultMinus.addEventListener("click", () => {
+
+  if(adults > 0){
+
+    adults--;
+
+    updateAttendanceCounters();
+
+  }
+
+});
+
+childPlus.addEventListener("click", () => {
+
+  children++;
+
+  updateAttendanceCounters();
+
+});
+
+childMinus.addEventListener("click", () => {
+
+  if(children > 0){
+
+    children--;
+
+    updateAttendanceCounters();
+
+  }
+
+});
+
+adultPlus.addEventListener("click", () => {
+
+  adults++;
+
+  updateAttendanceCounters();
+
+  pressAnimation(adultPlus);
+  popValue(adultValue);
+
+});
+
+
+
+guestName.addEventListener("input",()=>{
+
+    guestName.classList.remove("input-error");
+
+    clearFieldError(nameError);
+
+});
+
+sendButton.addEventListener("click",async()=>{
+
+    if(!validateAttendance()){
+
+        return;
+
+    }
+
+    sendButton.disabled=true;
+
+    await sendAttendance();
+
+    sendButton.disabled=false;
+
+});

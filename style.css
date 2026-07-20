@@ -909,3 +909,202 @@ button {
     0 2px 0 #d99200;
 
 }
+
+/* slider confirmacion */
+.attendance-slider{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:60;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+}
+
+.attendance-panel{
+
+    position:absolute;
+
+    inset:0;
+
+    background:#0059d6;
+
+    transform:translateX(100%);
+
+    transition:.45s cubic-bezier(.2,.8,.2,1);
+
+}
+
+.attendance-slider.is-open{
+
+    pointer-events:auto;
+
+}
+
+.attendance-slider.is-open .attendance-panel{
+
+    transform:translateX(0);
+
+}
+
+.attendance-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:20px;
+
+    color:white;
+
+}
+
+.back-button{
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    font-size:24px;
+
+}
+
+.attendance-body{
+
+    padding:28px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+
+}
+
+.attendance-body label{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    color:white;
+
+}
+
+.attendance-body input{
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:1rem;
+
+}
+
+.counter-controls button{
+
+    transition:
+        transform .12s ease,
+        filter .12s ease;
+
+}
+
+.counter-controls button.is-pressed{
+
+    transform:scale(.85);
+
+    filter:brightness(.9);
+
+}
+.counter-value{
+
+    display:inline-block;
+
+}
+
+.counter-value.pop{
+
+    animation:numberPop .18s ease;
+
+}
+
+@keyframes numberPop{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.35);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* field error */
+.field-error{
+
+    display:block;
+
+    min-height:20px;
+
+    margin-top:6px;
+
+    color:#ff7070;
+
+    font-size:.9rem;
+
+    font-weight:700;
+
+    opacity:0;
+
+    transition:.25s;
+
+}
+
+.field-error.is-visible{
+
+    opacity:1;
+
+}
+
+.input-error{
+
+    border:3px solid #ff4d4d !important;
+
+    animation:shake .35s;
+}
+
+@keyframes shake{
+
+0%{transform:translateX(0);}
+20%{transform:translateX(-5px);}
+40%{transform:translateX(5px);}
+60%{transform:translateX(-5px);}
+80%{transform:translateX(5px);}
+100%{transform:translateX(0);}
+
+}
