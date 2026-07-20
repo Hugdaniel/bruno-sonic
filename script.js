@@ -597,40 +597,29 @@ function getCounterTarget() {
 
 async function sendAttendance(){
 
-    const data={
-
-        nombre:guestName.value.trim(),
-
-        adultos:adults,
-
-        ninos:children
-
+    const data = {
+        nombre: guestName.value.trim(),
+        adultos: adults,
+        ninos: children
     };
 
     console.log("Enviando datos de asistencia:", data);
 
-    const response=await fetch(SHEET_API_URL,{
-
+    const response = await fetch(SHEET_API_URL,{
         method:"POST",
-
         headers:{
-
             "Content-Type":"application/json"
-
         },
-
-        body:JSON.stringify(data)
-
+        body: JSON.stringify(data)
     });
 
-    console.log("Respuesta del servidor:", response);
     const result = await response.text();
-    console.log("Respuesta del servidor (texto):", result);
 
-    return await response.json();
+    console.log("Respuesta servidor:", result);
+
+    return result;
 
 }
-
 // -----------------------------
 // UI EVENTS
 // -----------------------------
@@ -723,15 +712,14 @@ guestName.addEventListener("input",()=>{
 sendButton.addEventListener("click",async()=>{
 
     if(!validateAttendance()){
-
         return;
-
     }
 
     sendButton.disabled=true;
+    sendButton.textContent="ENVIANDO...";
 
     await sendAttendance();
 
-    sendButton.disabled=false;
+    sendButton.textContent="✔ CONFIRMADO";
 
 });
