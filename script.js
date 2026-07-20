@@ -51,6 +51,8 @@ let children = 1;
 const SHEET_API_URL =
 "https://rsvp-appi.85hbdaniel.workers.dev/";
 
+const invitationMusic = document.getElementById("invitationMusic");
+
 // Guardamos los efectos de sonido en un objeto para poder sumar mas despues.
 const soundEffects = {
   play: document.getElementById("playSound"),
@@ -479,6 +481,19 @@ function startBackgroundMusic() {
   backgroundMusic.play().catch(() => {});
 }
 
+function startInvitationMusic(){
+
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+
+
+    invitationMusic.volume = 0.55;
+
+    invitationMusic.play()
+    .catch(()=>{});
+
+}
+
 // Coordinamos la transicion visual sin agregar todavia logica de juego.
 // -----------------------------
 // INTRO TO GAME TRANSITION
@@ -669,6 +684,8 @@ async function sendAttendance(){
 showInvitationButton.addEventListener("click", () => {
 
     victoryScreen.classList.remove("is-visible");
+
+    startInvitationMusic();
 
     setTimeout(() => {
 
