@@ -766,5 +766,8 @@ sendButton.addEventListener("click",async()=>{
 
 }
 
+  // Show confirmation after successful send
+  showConfirmationMessage();
+
 
 }) ;
