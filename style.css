@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
 html {
   min-height: 100%;
 }
@@ -34,6 +38,13 @@ img {
 
 button {
   font: inherit;
+}
+
+button,
+input {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* Pantallas principales */
@@ -576,6 +587,9 @@ button {
   opacity: 0;
 
   touch-action: manipulation;
+
+  -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .game-ring img {
