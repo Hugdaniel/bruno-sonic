@@ -882,6 +882,31 @@ button {
 
 }
 
+.header-title{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:5px;
+
+}
+
+
+.mission-label{
+
+    color:#ffc400;
+
+    font-size:.75rem;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+}
+
+
+
 .attendance-button{
 
     width:100%;
@@ -989,23 +1014,7 @@ button {
 }
 
 
-.attendance-header::after{
 
-    content:"NUEVA MISIÓN";
-
-    position:absolute;
-
-    top:65px;
-
-    left:85px;
-
-    font-size:.7rem;
-
-    color:#ffc400;
-
-    font-weight:bold;
-
-}
 
 .back-button{
 
