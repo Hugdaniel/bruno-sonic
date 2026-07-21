@@ -931,11 +931,18 @@ button {
 
     inset:0;
 
-    background:#0059d6;
+    background:
+    linear-gradient(
+        180deg,
+        #0059d6,
+        #003a91
+    );
 
     transform:translateX(100%);
 
     transition:.45s cubic-bezier(.2,.8,.2,1);
+
+    padding-top:20px;
 
 }
 
@@ -965,6 +972,33 @@ button {
 
 }
 
+.attendance-header h2{
+
+    font-size:1.4rem;
+
+    line-height:1;
+
+}
+
+
+.attendance-header::after{
+
+    content:"NUEVA MISIÓN";
+
+    position:absolute;
+
+    top:65px;
+
+    left:85px;
+
+    font-size:.7rem;
+
+    color:#ffc400;
+
+    font-weight:bold;
+
+}
+
 .back-button{
 
     width:48px;
@@ -981,13 +1015,13 @@ button {
 
 .attendance-body{
 
-    padding:28px;
+    padding:20px;
 
     display:flex;
 
     flex-direction:column;
 
-    gap:24px;
+    gap:16px;
 
 }
 
@@ -1015,11 +1049,43 @@ button {
 
 }
 
+.counter{
+
+    background:rgba(255,255,255,.12);
+
+    border:2px solid rgba(255,255,255,.25);
+
+    border-radius:18px;
+
+    padding:16px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    color:white;
+
+}
+
 .counter-controls button{
 
-    transition:
-        transform .12s ease,
-        filter .12s ease;
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#ffc400;
+
+    color:#003a91;
+
+    font-size:28px;
+
+    font-weight:900;
 
 }
 
