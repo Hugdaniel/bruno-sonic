@@ -868,6 +868,14 @@ button {
 
 }
 
+.info-item a{
+
+    color:#0b4ec7;
+
+    text-decoration:none;
+
+}
+
 .icon{
 
     font-size:28px;
